@@ -1,0 +1,19 @@
+{
+  "name": "actmg",
+  "version": "1.0.0",
+  "description": "ACTMG Programming Skills Test",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bontsie/acmtg.git"
+  },
+  "author": "Rainier Lesava",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bontsie/acmtg/issues"
+  },
+  "homepage": "https://github.com/Bontsie/acmtg#readme"
+}
