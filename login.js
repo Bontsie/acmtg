@@ -18,6 +18,11 @@ app.use(session({
 	resave: true,
 	saveUninitialized: true
 }));
+app.use(function(req, res, next) {
+    res.locals.currUser = req.session.username;
+    next();
+  });
+
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 app.use(express.static ('static'));

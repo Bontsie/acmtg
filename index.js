@@ -22,7 +22,7 @@ var connection = mysql.createConnection({
 	database : 'actmg'
 });
 
-
+app.set ('connection',connection);
 /***
  * General Settings and Stuff
  */
@@ -43,8 +43,11 @@ app.use('/js',express.static(path.join(__dirname, 'public/css')));
  * Routes
  */
 app.get('/', site.index);
+app.get('/login', site.login);
 
+app.post('/login', user.login);
 
+app.get('/logout', user.logout);
 
 //app.post('/auth', user.login);
 
