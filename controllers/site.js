@@ -22,7 +22,7 @@ exports.login = function(request, response){
 };
 
 exports.login_err = function(request, response){
-    response.render('login', { title: 'Logged Out', err_msg: 'err', currUser:''  });
+    response.render('login', { title: 'Logged Out', err_msg: 'err', currUser:'', message: "err"  });
 };
 
 

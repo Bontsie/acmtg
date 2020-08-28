@@ -39,7 +39,10 @@ exports.auth = function (username, password, req){
                 //return (username);
             }
             else{
-                return null;
+                //req (null,{message: 'err'});
+                
+                req (new Error ('error message'));
+                //return null;
             }			
         });
     }
@@ -71,6 +74,7 @@ exports.isAuth = function (req, res, next){
         return (next(err))
     }
     else{
+
         return next();
     }
 }

@@ -26,7 +26,12 @@ module.exports = app;
 
 passport.use(new LocalStrategy(
     function(username, password, cb) {
-        user.auth(username,password, cb);
+        user.auth(username,password, function (err,user){
+            if (err) { return cb (null, false, {message:'error'}) }
+            
+            if (!user) { return cb(null, false); }
+            return cb (null, user);
+        });
        //console.log("out> " + user.auth  (username,password,cb));
       // if (!user.auth(username,password, cb)){
 
@@ -84,8 +89,9 @@ if (!module.parent) {
  */
 app.get('/', authLock,site.login);
 app.get('/login',site.login);
+app.get("/login/err",site.login_err);
 
-app.post('/login', passport.authenticate('local',{successRedirect: '/home', failureRedirect: '/login'}));
+app.post('/login', passport.authenticate('local',{successRedirect: '/home', failureRedirect: '/login/err'}));
 
 app.get('/logout', function(req, res){
     
