@@ -20,5 +20,5 @@ for (var i=0;i<deleteButton.length;i++){
 
 const cancelButton = document.getElementById("cancelButton");
 cancelButton.addEventListener('click', function(e){
-    window.location.href('/home');
+    window.location =  "/home";
 });
