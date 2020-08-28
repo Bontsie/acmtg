@@ -1,5 +1,6 @@
 const session = require("express-session");
-const connection = require("./db")
+const connection = require("./db");
+const { request } = require("express");
 exports.login = function (request, response, next){
     var username = request.body.username;
     var password = request.body.password;
@@ -31,7 +32,7 @@ exports.auth = function (username, password, req){
     
     if (username && password) {
         connection.query('SELECT * FROM accounts WHERE username = ? AND password = ?', [username, password], function(error, results, fields){ 
-            
+            session.user = username;
             if (results.length > 0) {
                 //console.log(">true");
                 req (null, username);
@@ -55,17 +56,13 @@ exports.logout = function (request, response){
 };
 
 
-exports.list = function (request, response){
-    //var connection = request.app.get('connection');
-    /*connection.query ("SELECT id, name FROM accounts", function(error, results, fields){
-        response.render ('index', { title: 'Login Error', err_msg: 'err', currUser: request.session.username, data: results   })
-
-    });*/
-     request.session.data =({'id': 1, 'name': 'Bonta'});
-    response.json({'id': 1, 'name': 'Bonta'});
-     next ();
-//    response.render ('index', { title: 'Login Error', err_msg: 'err', currUser: request.session.username, data: {'id': 1, 'name': 'Bonta'}   })
-}
+exports.list = function (){
+    
+    connection.query ("SELECT id, name FROM accounts", function(error, results, fields){
+       session.queryResults = results;
+    });
+    
+}   
 
 exports.isAuth = function (req, res, next){
     if(req.session.loggedin){

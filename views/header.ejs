@@ -10,8 +10,12 @@
   <link rel="stylesheet" type="text/css" href="/css/uikit.min.css">
   <body class="uk-flex uk-flex-center uk-flex-middle uk-background-muted uk-height-viewport" data-uk-height-viewport></body>
   <% if (currUser) { %> 
-  <div >Logged in as <%= currUser %>  </div>
+  <div <h1 class="uk-text-lead" style="top: 50px; position: absolute; left: 300px">Welcome back <%= currUser %></h1> </div>
+  <div> <h1 class="uk-text-lead" style="top: 50px; position: absolute; right: 300px"><a href="/logout">LOGOUT</a></h1>
+  </div>
+
   <div uk-sticky="animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; cls-inactive: uk-navbar-transparent uk-light; top: 200">
     <nav class="uk-navbar-container" uk-navbar>...</nav>
-</div>
+   </div>
+
   <% } %>
