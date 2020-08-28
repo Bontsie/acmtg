@@ -88,7 +88,7 @@ app.get('/login',site.login);
 app.post('/login', passport.authenticate('local',{successRedirect: '/home', failureRedirect: '/login'}));
 
 app.get('/logout', function(req, res){
-    console.log("logging out");
+    
     req.logout();
     res.redirect('/');
 });

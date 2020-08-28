@@ -1,5 +1,29 @@
 <%- include ("./header") %>
 
 
-<%= data %>
+
+<div class="uk-container ">
+    <div class="">
+        <table class="uk-table  uk-table-small uk-table-striped">
+            
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            <% for(var item in data){ %>
+                <tr>
+                    <td><%= data[item].username %></td>
+                    <td><%= data[item].name %></td>
+                    <td>edit delete</td>
+                </tr>
+            <% } %>
+            </tbody>
+        
+        </table>
+    </div>
+</div>
 <%- include ("./footer") %>

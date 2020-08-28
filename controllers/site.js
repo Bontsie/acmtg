@@ -4,8 +4,8 @@ const connection = require("./db");
 exports.index = function(req, res){
     
    
-   connection.query ("SELECT id, name FROM accounts", function(error, results, fields){
-        res.render("index", { data: JSON.stringify(results), title: 'Users', err_msg: null, currUser: session.user});
+   connection.query ("SELECT username, name FROM accounts", function(error, results, fields){
+        res.render("index", { data: results, title: 'Users', err_msg: null, currUser: session.user});
     });
     
    
