@@ -106,6 +106,12 @@ app.get('/edit/:id', authLock, site.user);
 */
 
 app.post('/user/save', authLock, user.save);
+
+
+app.get('/user/new', authLock, site.new);
+app.post('/user/new/save', authLock, user.new);
+app.post('/user/delete', authLock, user.delete);
+
 app.get('/home', authLock, site.index);
 
 

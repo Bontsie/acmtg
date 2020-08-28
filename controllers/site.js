@@ -37,3 +37,7 @@ exports.user = function (req, res){
     
     
 }
+
+exports.new  = function (req, res){
+    res.render ('user.ejs',{title: 'New User', err_msg: null, currUser: session.user, data: null });
+}

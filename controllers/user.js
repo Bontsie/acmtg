@@ -79,6 +79,24 @@ exports.save = function (req, res){
     connection.query ("UPDATE accounts SET name = ?, password = ?, dob = ?  WHERE id = "+ req.body.id , [req.body.name, req.body.password, req.body.dob] ,function(error, results, fields){
         res.redirect ("/home");
         console.log(error);
-        console.log(results)
+        console.log(results);
     });
 }
+
+
+exports.new = function (req, res){
+    connection.query ("INSERT INTO accounts (name, username, password, dob) VALUES (?, ?, ?, ?)" , [req.body.name,req.body.username, req.body.password, req.body.dob] ,function(error, results, fields){
+        res.redirect ("/home");
+        console.log(error);
+        console.log(results);
+    });
+}
+
+exports.delete = function (req, res){
+    connection.query ("DELETE FROM accounts WHERE id = "+ req.body.id ,function(error, results, fields){
+        res.redirect ("/home");
+        console.log(error);
+        console.log(results);
+    });
+}
+

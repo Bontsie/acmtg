@@ -18,7 +18,8 @@
                 <tr>
                     <td><%= data[item].username %></td>
                     <td><%= data[item].name %></td>
-                    <td><button class="deleteButton uk-button uk-button-danger uk-button-small" value="<%= data[item].id %>">Delete</button></td>
+                    
+                    <%  if (data[item].id > 1 && currUser != data[item].username ) {%> <td><form action="/user/delete" method="POST"><input type="hidden" name="id" value="<%= data[item].id %>" ><button class="deleteButton uk-button uk-button-danger uk-button-small delete-<%= data[item].id %>" value="<%= data[item].id %>" type="submit">Delete</button></form></td> <% } %>
                     <td><button class="editButton uk-button uk-button-primary uk-button-small" value="<%= data[item].id %>">Edit</button></td>
                     
                 </tr>
@@ -26,7 +27,7 @@
             </tbody>
         
         </table>
-        <center><button class="uk-button uk-button-secondary">Add New User</button></center>
+        <center><a href="/user/new"><button class="uk-button uk-button-secondary">Add New User</button></a></center>
     </div>
 </div>
 <%- include ("./footer") %>

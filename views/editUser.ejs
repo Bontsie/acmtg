@@ -2,10 +2,10 @@
 
 <div class="uk-width-medium uk-padding-small">
 	<form action="/user/save" method="POST">
-			Name<input class="uk-input" type="text" placeholder="Name" name="name" value="<%= data[0]['name'] -%>">
-			Username <input style="margin-top: 5px"class="uk-input" type="text"  disabled="disabled" placeholder="Username" name="username" value="<%= data[0]['username'] -%>">
-			Password<input style="margin-top: 5px" class="uk-input" type="text" placeholder="Password"  name="password" value="<%= data[0]['password'] -%>">
-			Date of Birth<input style="margin-top: 5px" class="uk-input" type="date" name="dob" value="<%= data[0]['dob'] -%>">
+			Name<input class="uk-input" type="text" placeholder="Name" name="name" value="<%= data[0]['name'] -%>" required>
+			Username <input style="margin-top: 5px"class="uk-input" type="text"  readonly placeholder="Username" name="username" value="<%= data[0]['username'] -%>" required>
+			Password<input style="margin-top: 5px" class="uk-input" type="text" placeholder="Password"  name="password" value="<%= data[0]['password'] -%>" required>
+			Date of Birth<input style="margin-top: 5px" class="uk-input" type="date" name="dob" value="<%= data[0]['dob'] -%>" required>
 			<input type="hidden" name="id" value="<%= data[0]['id'] -%>">
 			<div style="margin-top: 20px">
 		    <button class="uk-button uk-button-danger" style="width: 100px;margin-left: 20px" id="cancelButton" type="button"> Cancel</button>
