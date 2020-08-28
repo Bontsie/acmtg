@@ -1,0 +1,16 @@
+<%- include ("./header") %>
+
+<div class="uk-width-medium uk-padding-small">
+	<form>
+			Name<input class="uk-input" type="text" placeholder="Name" value="<%= data[0]['name'] -%>">
+			Username <input style="margin-top: 5px"class="uk-input" type="text" placeholder="Username"  value="<%= data[0]['username'] -%>">
+			Password<input style="margin-top: 5px" class="uk-input" type="password" placeholder="Password"  value="<%= data[0]['password'] -%>">
+			Confirm Password<input style="margin-top: 5px" class="uk-input" type="password" placeholder="Confirm Password" value="<%= data[0]['password'] -%>">
+			Date of Birth<input style="margin-top: 5px" class="uk-input" type="date" value="<%= data[0]['dob'] -%>">
+			<div style="margin-top: 20px"><button class="uk-button uk-button-primary" style="width: 100px;margin-left: 20px" id="cancelButton">Cancel</button><button class="uk-button uk-button-danger" style="width: 100px; margin-left: 10px">Save</button></div>
+			
+	</form>
+
+</div>
+
+<%- include ("./footer") %>

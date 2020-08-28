@@ -72,7 +72,7 @@ app.use(passport.session());
 
 //routes for static stuff
 app.use('/css',express.static(path.join(__dirname, 'public/css')));
-app.use('/js',express.static(path.join(__dirname, 'public/css')));
+app.use('/js',express.static(path.join(__dirname, 'public/js')));
 
 /* istanbul ignore next */
 if (!module.parent) {
@@ -93,7 +93,9 @@ app.get('/logout', function(req, res){
     res.redirect('/');
 });
 
+app.get('/user',site.user);
 
+app.get('/edit/:id', authLock, site.user);
 
 //app.post('/auth', user.login);
 

@@ -2,8 +2,8 @@
 
 
 
-<div class="uk-container ">
-    <div class="">
+<div class="uk-container " >
+    <div class="" >
         <table class="uk-table  uk-table-small uk-table-striped">
             
             <thead>
@@ -18,7 +18,8 @@
                 <tr>
                     <td><%= data[item].username %></td>
                     <td><%= data[item].name %></td>
-                    <td>edit delete</td>
+                    <td><button class="editButton uk-button uk-button-primary uk-button-small" value="<%= data[item].id %>">Edit</button></td>
+                    <td><button class="deleteButton uk-button uk-button-danger uk-button-small" value="<%= data[item].id %>">Delete</button></td>
                 </tr>
             <% } %>
             </tbody>
