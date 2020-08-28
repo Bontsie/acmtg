@@ -74,3 +74,11 @@ exports.isAuth = function (req, res, next){
         return next();
     }
 }
+
+exports.save = function (req, res){
+    connection.query ("UPDATE accounts SET name = ?, password = ?, dob = ?  WHERE id = "+ req.body.id , [req.body.name, req.body.password, req.body.dob] ,function(error, results, fields){
+        res.redirect ("/home");
+        console.log(error);
+        console.log(results)
+    });
+}

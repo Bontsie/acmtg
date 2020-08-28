@@ -1,9 +1,9 @@
 <%- include ("./header") %>
 
 <div class="uk-width-medium uk-padding-small">
-	<form action="/user/save" method="GET">
+	<form action="/user/save" method="POST">
 			Name<input class="uk-input" type="text" placeholder="Name" name="name" value="<%= data[0]['name'] -%>">
-			Username <input style="margin-top: 5px"class="uk-input" type="text" placeholder="Username" name="username" value="<%= data[0]['username'] -%>">
+			Username <input style="margin-top: 5px"class="uk-input" type="text"  disabled="disabled" placeholder="Username" name="username" value="<%= data[0]['username'] -%>">
 			Password<input style="margin-top: 5px" class="uk-input" type="text" placeholder="Password"  name="password" value="<%= data[0]['password'] -%>">
 			Date of Birth<input style="margin-top: 5px" class="uk-input" type="date" name="dob" value="<%= data[0]['dob'] -%>">
 			<input type="hidden" name="id" value="<%= data[0]['id'] -%>">

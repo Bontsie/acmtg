@@ -105,7 +105,7 @@ app.get('/edit/:id', authLock, site.user);
 });
 */
 
-
+app.post('/user/save', authLock, user.save);
 app.get('/home', authLock, site.index);
 
 
