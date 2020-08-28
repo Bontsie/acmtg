@@ -25,6 +25,14 @@ exports.login = function (request, response, next){
   
 };
 
+
+
+exports.auth = function (username, password){
+    return "Username";
+    
+
+}
+
 exports.logout = function (request, response){
     if (request.session.loggedin){
         request.session.loggedin = false;

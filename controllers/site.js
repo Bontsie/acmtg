@@ -17,6 +17,7 @@ exports.index = function(request, response){
 
 exports.login = function(request, response){
     //response.send ("hello world");
+    
     response.render('login', { title: 'Please Login', err_msg: '', currUser:''  });
 };
 

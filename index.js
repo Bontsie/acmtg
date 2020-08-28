@@ -11,6 +11,7 @@ var logger = require('morgan');
 var user =  require ('./controllers/user');
 var site =  require ('./controllers/site');
 var passport = require ('passport');
+const { doesNotMatch } = require('assert');
 var LocalStrategy = require ('passport-local').Strategy;
 
 module.exports = app;
@@ -27,16 +28,21 @@ var connection = mysql.createConnection({
 
 app.set ('connection',connection);
 
+/***
+ * Passport Specific Session Control
+ */
+
 passport.use(new LocalStrategy(
-    function(username, password, done) {
-      User.findOne({ username: username }, function (err, user) {
-        if (err) { return done(err); }
-        if (!user) { return done(null, false); }
-        if (!user.verifyPassword(password)) { return done(null, false); }
-        return done(null, user);
-      });
-    }
-  ));
+    function(username, password, cb) {
+       if (!user.auth('username','password')){
+           return cb(null, false, {message: 'Incorrect username or password' });
+       }
+     
+       return cb (null, user)
+    })
+);
+    
+
 
 
 /***
@@ -45,15 +51,34 @@ passport.use(new LocalStrategy(
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use(session({
-	secret: 'bbb0245414bf2fd014e4c1de30649a20',
-	resave: false,
-	saveUninitialized: false
-}));
+passport.serializeUser(function(user, cb) {
+    cb(null, user);
+});
+
+passport.deserializeUser(function(user, cb) {
+    cb(null, user);
+});
+
+/***
+ * Session Control
+ */
+
 app.use(express.urlencoded({extended : true}));
 app.use(express.json());
+//app.use(require('morgan')('combined'));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(session({ secret: 'bbb0245414bf2fd014e4c1de30649a20', resave: false, saveUninitialized: false }));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+
+
+//routes for static stuff
 app.use('/css',express.static(path.join(__dirname, 'public/css')));
 app.use('/js',express.static(path.join(__dirname, 'public/css')));
+
 /* istanbul ignore next */
 if (!module.parent) {
     app.use(logger('dev'));
@@ -62,10 +87,10 @@ if (!module.parent) {
 /***
  * Routes
  */
-app.get('/',passport.authenticate('local',{successRedirect: '/', failureRedirect: '/login'}), site.index);
+//app.get('/', site.login);
 app.get('/login', site.login);
 
-app.post('/login', passport.authenticate('local',{successRedirect: '/', failureRedirect: '/login'}));
+app.post('/login', passport.authenticate('local',{successRedirect: '/home', failureRedirect: '/s'}));
 
 app.get('/logout', user.logout);
 
@@ -80,15 +105,7 @@ app.get('/logout', user.logout);
 */
 
 
-app.get('/home', function(request, response, next) {
-    /*if (request.session.loggedin) {
-        response.send('Welcome back, ' + request.session.username + '!');
-    } else {
-        response.redirect(301, '/');
-    }
-    response.end();*/
-    response.send ('hello');
-});
+app.get('/home', site.index);
 
 
 app.listen(8000,"0.0.0.0");
