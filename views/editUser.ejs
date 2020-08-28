@@ -1,6 +1,5 @@
 <%- include ("./header") %>
 
-<% if (typeof data == 'undefined') {%>
 <div class="uk-width-medium uk-padding-small">
 	<form>
 			Name<input class="uk-input" type="text" placeholder="Name" value="<%= data[0]['name'] -%>">
@@ -13,9 +12,5 @@
 	</form>
 
 </div>
-<% } else { %>
-			<center><h1>User Not Found</h1>
-			<a href="/home/"><h3>Click here to go back</h3></a></center>
 
-	<% } %>
 <%- include ("./footer") %>
