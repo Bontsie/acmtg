@@ -10,6 +10,8 @@ var path = require('path');
 var logger = require('morgan');
 var user =  require ('./controllers/user');
 var site =  require ('./controllers/site');
+var passport = require ('passport');
+var LocalStrategy = require ('passport-local').Strategy;
 
 module.exports = app;
 
@@ -24,6 +26,19 @@ var connection = mysql.createConnection({
 });
 
 app.set ('connection',connection);
+
+passport.use(new LocalStrategy(
+    function(username, password, done) {
+      User.findOne({ username: username }, function (err, user) {
+        if (err) { return done(err); }
+        if (!user) { return done(null, false); }
+        if (!user.verifyPassword(password)) { return done(null, false); }
+        return done(null, user);
+      });
+    }
+  ));
+
+
 /***
  * General Settings and Stuff
  */
@@ -31,9 +46,9 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(session({
-	secret: 'secret',
-	resave: true,
-	saveUninitialized: true
+	secret: 'bbb0245414bf2fd014e4c1de30649a20',
+	resave: false,
+	saveUninitialized: false
 }));
 app.use(express.urlencoded({extended : true}));
 app.use(express.json());
@@ -43,15 +58,18 @@ app.use('/js',express.static(path.join(__dirname, 'public/css')));
 if (!module.parent) {
     app.use(logger('dev'));
   }
+
 /***
  * Routes
  */
-app.get('/', site.index);
+app.get('/',passport.authenticate('local',{successRedirect: '/', failureRedirect: '/login'}), site.index);
 app.get('/login', site.login);
 
-app.post('/login', user.login);
+app.post('/login', passport.authenticate('local',{successRedirect: '/', failureRedirect: '/login'}));
 
 app.get('/logout', user.logout);
+
+
 
 //app.post('/auth', user.login);
 
