@@ -7,6 +7,7 @@ var mysql = require('mysql');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var path = require('path');
+var logger = require('morgan');
 var user =  require ('./controllers/user');
 var site =  require ('./controllers/site');
 
@@ -38,7 +39,10 @@ app.use(express.urlencoded({extended : true}));
 app.use(express.json());
 app.use('/css',express.static(path.join(__dirname, 'public/css')));
 app.use('/js',express.static(path.join(__dirname, 'public/css')));
-
+/* istanbul ignore next */
+if (!module.parent) {
+    app.use(logger('dev'));
+  }
 /***
  * Routes
  */
@@ -58,13 +62,14 @@ app.get('/logout', user.logout);
 */
 
 
-app.get('/home', function(request, response) {
-    if (request.session.loggedin) {
+app.get('/home', function(request, response, next) {
+    /*if (request.session.loggedin) {
         response.send('Welcome back, ' + request.session.username + '!');
     } else {
         response.redirect(301, '/');
     }
-    response.end();
+    response.end();*/
+    response.send ('hello');
 });
 
 
