@@ -5,7 +5,7 @@ const { response } = require("..");
 exports.index = function(req, res){
     
    
-   connection.query ("SELECT id, username, name FROM accounts", function(error, results, fields){
+   connection.query ("SELECT id, username, name FROM tblusers", function(error, results, fields){
         res.render("index", { data: results, title: 'Users', err_msg: null, currUser: session.user});
     });
     
@@ -28,7 +28,7 @@ exports.login_err = function(request, response){
 
 exports.user = function (req, res){
     var qData;
-    connection.query ("SELECT * from accounts  WHERE id = ? ", req.params.id ,function (err, resp, fields){
+    connection.query ("SELECT * from tblusers  WHERE id = ? ", req.params.id ,function (err, resp, fields){
    
         console.log(">"+JSON.stringify(resp));
 

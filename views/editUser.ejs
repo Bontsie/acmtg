@@ -5,6 +5,10 @@
 			Name<input class="uk-input" type="text" placeholder="Name" name="name" value="<%= data[0]['name'] -%>" required>
 			Username <input style="margin-top: 5px"class="uk-input" type="text"  readonly placeholder="Username" name="username" value="<%= data[0]['username'] -%>" required>
 			Password<input style="margin-top: 5px" class="uk-input" type="text" placeholder="Password"  name="password" value="<%= data[0]['password'] -%>" required>
+			Gender<div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+					<label><input class="uk-radio" type="radio" name="gender" value=0 <% if (data[0]['gender'] ==0) { %> checked <% } %>> Male</label>
+					<label><input class="uk-radio" type="radio" name="gender" value=1 <% if (data[0]['gender'] ==1) { %> checked <% } %>> Female</label>
+				</div>
 			Date of Birth<input style="margin-top: 5px" class="uk-input" type="date" name="dob" value="<%= data[0]['dob'] -%>" required>
 			<input type="hidden" name="id" value="<%= data[0]['id'] -%>">
 			<div style="margin-top: 20px">

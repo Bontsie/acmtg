@@ -7,7 +7,7 @@ exports.login = function (request, response, next){
     var connection = request.app.get('connection');
     
         if (username && password) {
-            connection.query('SELECT * FROM accounts WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
+            connection.query('SELECT * FROM tblusers WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
                 if (results.length > 0) {
                     request.session.loggedin = true;
                     request.session.username = username;
@@ -31,7 +31,7 @@ exports.login = function (request, response, next){
 exports.auth = function (username, password, req){
     
     if (username && password) {
-        connection.query('SELECT * FROM accounts WHERE username = ? AND password = ?', [username, password], function(error, results, fields){ 
+        connection.query('SELECT * FROM tblusers WHERE username = ? AND password = ?', [username, password], function(error, results, fields){ 
             session.user = username;
             if (results.length > 0) {
                 //console.log(">true");
@@ -58,7 +58,7 @@ exports.logout = function (request, response){
 
 exports.list = function (){
     
-    connection.query ("SELECT id, name FROM accounts", function(error, results, fields){
+    connection.query ("SELECT id, name FROM tblusers", function(error, results, fields){
        session.queryResults = results;
     });
     
@@ -76,7 +76,7 @@ exports.isAuth = function (req, res, next){
 }
 
 exports.save = function (req, res){
-    connection.query ("UPDATE accounts SET name = ?, password = ?, dob = ?  WHERE id = "+ req.body.id , [req.body.name, req.body.password, req.body.dob] ,function(error, results, fields){
+    connection.query ("UPDATE tblusers SET name = ?, password = ?, dob = ?, gender = ?  WHERE id = "+ req.body.id , [req.body.name, req.body.password, req.body.dob, req.body.gender] ,function(error, results, fields){
         res.redirect ("/home");
         console.log(error);
         console.log(results);
@@ -85,7 +85,7 @@ exports.save = function (req, res){
 
 
 exports.new = function (req, res){
-    connection.query ("INSERT INTO accounts (name, username, password, dob) VALUES (?, ?, ?, ?)" , [req.body.name,req.body.username, req.body.password, req.body.dob] ,function(error, results, fields){
+    connection.query ("INSERT INTO tblusers (name, username, password, dob, gender) VALUES (?, ?, ?, ?, ?)" , [req.body.name,req.body.username, req.body.password, req.body.dob, req.body.gender] ,function(error, results, fields){
         res.redirect ("/home");
         console.log(error);
         console.log(results);
@@ -93,7 +93,7 @@ exports.new = function (req, res){
 }
 
 exports.delete = function (req, res){
-    connection.query ("DELETE FROM accounts WHERE id = "+ req.body.id ,function(error, results, fields){
+    connection.query ("DELETE FROM tblusers WHERE id = "+ req.body.id ,function(error, results, fields){
         res.redirect ("/home");
         console.log(error);
         console.log(results);
