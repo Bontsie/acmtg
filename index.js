@@ -3,7 +3,6 @@
  */
 var express = require('express');
 var app = express();
-var mysql = require('mysql');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var path = require('path');
@@ -11,6 +10,7 @@ var logger = require('morgan');
 var user =  require ('./controllers/user');
 var site =  require ('./controllers/site');
 var passport = require ('passport');
+var authLock = require('connect-ensure-login').ensureLoggedIn();
 const { doesNotMatch } = require('assert');
 var LocalStrategy = require ('passport-local').Strategy;
 
@@ -19,26 +19,21 @@ module.exports = app;
 /*** 
 * DB Settings 
 */
-var connection = mysql.createConnection({
-	host     : 'localhost',
-	user     : 'root',
-	password : '',
-	database : 'actmg'
-});
-
-app.set ('connection',connection);
-
+//app.set ('connection',connection);
 /***
  * Passport Specific Session Control
  */
 
 passport.use(new LocalStrategy(
     function(username, password, cb) {
-       if (!user.auth('username','password')){
-           return cb(null, false, {message: 'Incorrect username or password' });
-       }
-     
-       return cb (null, user)
+        user.auth(username,password, cb);
+       //console.log("out> " + user.auth  (username,password,cb));
+      // if (!user.auth(username,password, cb)){
+
+        //   cb(null, false,{message:"error"});
+           //return cb(null, false, {message: 'Incorrect username or password' });
+       //}
+       //return cb (null, user)
     })
 );
     
@@ -87,10 +82,10 @@ if (!module.parent) {
 /***
  * Routes
  */
-//app.get('/', site.login);
-app.get('/login', site.login);
+app.get('/', authLock,site.login);
+app.get('/login',site.login);
 
-app.post('/login', passport.authenticate('local',{successRedirect: '/home', failureRedirect: '/s'}));
+app.post('/login', passport.authenticate('local',{successRedirect: '/home', failureRedirect: '/login'}));
 
 app.get('/logout', user.logout);
 
@@ -105,7 +100,7 @@ app.get('/logout', user.logout);
 */
 
 
-app.get('/home', site.index);
+app.get('/home', authLock, site.index);
 
 
 app.listen(8000,"0.0.0.0");

@@ -1,5 +1,5 @@
 const session = require("express-session");
-
+const connection = require("./db")
 exports.login = function (request, response, next){
     var username = request.body.username;
     var password = request.body.password;
@@ -27,10 +27,22 @@ exports.login = function (request, response, next){
 
 
 
-exports.auth = function (username, password){
-    return "Username";
+exports.auth = function (username, password, req){
     
-
+    if (username && password) {
+        connection.query('SELECT * FROM accounts WHERE username = ? AND password = ?', [username, password], function(error, results, fields){ 
+            
+            if (results.length > 0) {
+                //console.log(">true");
+                req (null, username);
+                //return (username);
+            }
+            else{
+                return null;
+            }			
+        });
+    }
+    
 }
 
 exports.logout = function (request, response){
